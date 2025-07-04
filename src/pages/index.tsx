@@ -19,6 +19,8 @@ import {
   List,
   ListItem,
   Link,
+  HStack,
+  Avatar,
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import axios from 'axios';
@@ -29,14 +31,28 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import NextLink from 'next/link';
+import { useAuth } from '../contexts/AuthContext';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002';
 
+interface Analysis {
+  recommendation: string;
+  confidence: number;
+  reasons: string[];
+  stats: {
+    positiveNews: number;
+    negativeNews: number;
+    totalNews: number;
+  };
+}
+
 export default function Home() {
+  const { user, logout, isLoading } = useAuth();
   const [cryptocurrency, setCryptocurrency] = useState('');
-  const [analysis, setAnalysis] = useState(null);
+  const [analysis, setAnalysis] = useState<Analysis | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -54,7 +70,7 @@ export default function Home() {
     }
   };
 
-  const getRecommendationColor = (recommendation) => {
+  const getRecommendationColor = (recommendation: string): string => {
     switch (recommendation?.toLowerCase()) {
       case 'buy': return 'green';
       case 'sell': return 'red';
@@ -77,12 +93,39 @@ export default function Home() {
   return (
     <Container maxW="container.xl" py={8}>
       <VStack spacing={8} align="stretch">
-        <Box textAlign="center">
-          <Heading mb={4}>Analyse Crypto</Heading>
-          <Text fontSize="lg" color="gray.600">
-            Analysez les sentiments du marché pour votre cryptomonnaie
-          </Text>
-        </Box>
+        <HStack justify="space-between" align="center">
+          <Box>
+            <Heading mb={4}>Analyse Crypto</Heading>
+            <Text fontSize="lg" color="gray.600">
+              Analysez les sentiments du marché pour votre cryptomonnaie
+            </Text>
+          </Box>
+          {isLoading ? (
+            <Button isLoading variant="ghost" />
+          ) : user ? (
+            <HStack spacing={4}>
+              <Avatar size="sm" src={user.avatar} name={user.displayName} />
+              <Text>{user.displayName}</Text>
+              <Button
+                onClick={logout}
+                colorScheme="red"
+                variant="outline"
+                size="sm"
+              >
+                Déconnexion
+              </Button>
+            </HStack>
+          ) : (
+            <Button
+              as={NextLink}
+              href="/login"
+              colorScheme="blue"
+              variant="outline"
+            >
+              Connexion
+            </Button>
+          )}
+        </HStack>
 
         <Box>
           <VStack spacing={4}>
@@ -126,7 +169,7 @@ export default function Home() {
                     {analysis.recommendation.toUpperCase()}
                   </Badge>
                   <List spacing={2}>
-                    {analysis.reasons.map((reason, index) => (
+                    {analysis.reasons.map((reason: string, index: number) => (
                       <ListItem key={index}>• {reason}</ListItem>
                     ))}
                   </List>
