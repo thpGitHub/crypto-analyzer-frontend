@@ -57,11 +57,11 @@ Certains services nécessitent un lancement manuel pour plus de flexibilité :
 ## Services développés
 
 ### Services Crypto
-1. **crypto-analyzer-frontend** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-frontend))
+1. **crypto-analyzer-frontend** ([GitHub](https://github.com/zkerkeb-class/front-thpGitHub)
    - Interface utilisateur React/Next.js pour l'analyse des cryptomonnaies
    - Port: 3005
 
-2. **crypto-analyzer-analysis** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-analysis))
+2. **crypto-analyzer-analysis** ([GitHub](https://github.com/zkerkeb-class/service-ia-thpGitHub)
    - Service d'analyse et de traitement des données crypto
    - Port: 3002
 
@@ -69,7 +69,7 @@ Certains services nécessitent un lancement manuel pour plus de flexibilité :
    - Service de gestion d'authentification
    - Port: 3006
 
-4. **crypto-analyzer-news-scraper** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-news-scraper))
+4. **crypto-analyzer-news-scraper** ([GitHub](https://github.com/thpGitHub/crypto-analyzer-news-scraper.git)
    - Service de scraping des actualités crypto
    - Port: 3003
 
@@ -81,7 +81,7 @@ Certains services nécessitent un lancement manuel pour plus de flexibilité :
    - Dashboard de monitoring des services
    - Port: 3007
 
-7. **crypto-analyzer-docker** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-docker))
+7. **crypto-analyzer-docker** ([GitHub](https://github.com/thpGitHub/crypto-analyzer-docker.git)
    - Service principal d'orchestration Docker
    - Gère le démarrage coordonné de tous les services
    - Configure les réseaux et volumes partagés
