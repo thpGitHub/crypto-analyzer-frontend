@@ -1,3 +1,103 @@
+# Projet Services Web - Analyse de Cryptomonnaies
+**Étudiant :** Thierry POUPON
+
+## Architecture des Services
+
+Le projet utilise une architecture microservices où chaque composant est conteneurisé avec Docker. 
+
+### Services Orchestrés
+Le service **crypto-analyzer-docker** orchestre le démarrage automatique des services principaux via son `docker-compose.yml` :
+
+```yaml
+# crypto-analyzer-docker/docker-compose.yml
+include:
+  - path: ../crypto-analyzer-news-store/docker-compose.yml
+    name: news-store
+  - path: ../crypto-analyzer-analysis/docker-compose.yml
+    name: analyzer
+  - path: ../crypto-analyzer-frontend/docker-compose.yml
+    name: frontend
+  - path: ../crypto-analyzer-authentication/docker-compose.yml
+    name: auth
+```
+
+Pour démarrer les services principaux :
+```bash
+cd crypto-analyzer-docker
+docker-compose up -d
+```
+
+### Services à Lancer Manuellement
+Certains services nécessitent un lancement manuel pour plus de flexibilité :
+
+1. **crypto-analyzer-metrics-dashboard** (Port: 3007)
+   ```bash
+   cd crypto-analyzer-metrics-dashboard
+   docker-compose up -d
+   ```
+   - Dashboard de monitoring indépendant
+   - Permet une surveillance dédiée des services
+
+2. **crypto-analyzer-notification** (Port: 3011)
+   ```bash
+   cd crypto-analyzer-notification
+   docker-compose up -d
+   ```
+   - Gestion des notifications en temps réel
+   - Service optionnel selon les besoins
+
+3. **crypto-analyzer-news-scraper** (Port: 3003)
+   ```bash
+   cd crypto-analyzer-news-scraper
+   docker-compose up -d
+   ```
+   - Service de scraping des actualités
+   - Lancé séparément pour contrôler la charge du scraping
+
+## Services développés
+
+### Services Crypto
+1. **crypto-analyzer-frontend** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-frontend))
+   - Interface utilisateur React/Next.js pour l'analyse des cryptomonnaies
+   - Port: 3005
+
+2. **crypto-analyzer-analysis** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-analysis))
+   - Service d'analyse et de traitement des données crypto
+   - Port: 3002
+
+3. **crypto-analyzer-authentication** ([GitHub](https://github.com/zkerkeb-class/autenthication-service-thpGitHub)
+   - Service de gestion d'authentification
+   - Port: 3006
+
+4. **crypto-analyzer-news-scraper** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-news-scraper))
+   - Service de scraping des actualités crypto
+   - Port: 3003
+
+5. **crypto-analyzer-news-store** ([GitHub](https://github.com/zkerkeb-class/bdd-services-thpGitHub)
+   - Service de stockage des actualités
+   - Port: 3004
+
+6. **crypto-analyzer-metrics-dashboard** ([GitHub](https://github.com/zkerkeb-class/metrics-service-thpGitHub)
+   - Dashboard de monitoring des services
+   - Port: 3007
+
+7. **crypto-analyzer-docker** ([GitHub](https://github.com/thierryherrmann/crypto-analyzer-docker))
+   - Service principal d'orchestration Docker
+   - Gère le démarrage coordonné de tous les services
+   - Configure les réseaux et volumes partagés
+   - Point d'entrée unique pour déployer l'application
+
+8. **crypto-analyzer-notification** ([GitHub](https://github.com/zkerkeb-class/notification-mail-sms-service-thpGitHub)
+   - Service de gestion des notifications
+   - Port: 3011
+
+### Service de Paiement
+- **payment-services** ([GitHub](https://github.com/zkerkeb-class/payment-services-thpGitHub)
+   - Service de gestion des paiements
+   - Port: 3010
+
+---
+
 # Crypto Analyzer - Interface Frontend
 
 ## 📊 Vue d'ensemble
