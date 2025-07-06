@@ -44,17 +44,30 @@ Application d'analyse de sentiments pour les cryptomonnaies, utilisant une archi
 NEXT_PUBLIC_ANALYZER_URL=http://localhost:3002
 
 # Data Collector
-MONGODB_URI=mongodb://admin:password123@mongodb:27018/searchResults?authSource=admin
-CRYPTOPANIC_API_KEY=votre_clé_api
+MONGODB_URI=mongodb://<username>:<password>@mongodb:27018/searchResults?authSource=admin
+CRYPTOPANIC_API_KEY=<your_cryptopanic_api_key>
 
 # Crypto Analyzer
-MONGODB_URI=mongodb://admin:password123@mongodb:27018/searchResults?authSource=admin
+MONGODB_URI=mongodb://<username>:<password>@mongodb:27018/searchResults?authSource=admin
 PORT=3002
 
 # MongoDB
 MONGO_INITDB_ROOT_USERNAME=admin
 MONGO_INITDB_ROOT_PASSWORD=password123
 ```
+
+# Frontend Environment Variables
+
+Les variables d'environnement sont configurées dans le `docker-compose.yml` :
+
+```yaml
+environment:
+  - NEXT_PUBLIC_API_URL=http://crypto-analyzer-analysis:3002
+  - NEXT_PUBLIC_AUTH_URL=http://localhost:3006
+  - NEXT_PUBLIC_FRONTEND_URL=http://localhost:3005
+```
+
+Note : Les variables MongoDB mentionnées précédemment sont utilisées par les services backend (data-collector et crypto-analyzer), pas par le frontend.
 
 ## 🌐 Réseau Docker
 
